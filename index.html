@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetcinng fake api</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        input {
+            line-height: 1.5rem;
+            text-indent: 2;
+        }
+
+        input[type="button"],
+        #clear {
+            padding: 5px 10px;
+        }
+
+        #clear {
+            margin-top: 20px;
+        }
+        fieldset{
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: blueviolet;
+        }
+
+        @media (max-width:455px) {
+            input[type="button"] {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>All About session Storage </h1>
+    <fieldset>
+        <legend>Set data to session storage</legend>
+        <input type="text" id="inputkey" placeholder="Key here">
+        <input type="text" id="inputvlaue" placeholder="Value here">
+        <input type="button" value="Insert" id="button">
+    </fieldset>
+
+    <fieldset>
+        <legend>Data Inside session Storage</legend>
+        <div class="session-data"></div>
+        <input type="button" value="Clear" id="clear">
+    </fieldset>
+
+    <fieldset>
+        <legend>Methods in session Storage</legend>
+        <ul>
+            <li>sessionStorage.<mark>setItem(key => instring||varable , value => instring||variable)</mark> </li>
+            <br>
+            <li>sessionStorage. <mark>getItem(key => instring||varable) => return value of key</mark>    </li>
+            <br>
+            <li>sessionStorage.length => <strong>Provide you number of key value pair inside it</strong></li>
+            <br>
+            <li>sessionStorage.clear() => <strong>will Clear whole session storage</strong> </li>
+            <br>
+            <li>sessionStorage.<mark>removeItem(key => instring||varable) =>remove particular key</mark></li>
+            <br>
+            <li>sessionStorage.<mark>key(index || number &lt; sessionStorage.length ) => <strong>get you a particular key</strong></mark></li>
+        </ul>
+
+        <p><Strong><em>data inside session Storage is Persistace and will remain there unless you manually delete it</em></Strong></p>
+    </fieldset>
+
+    <script>
+        let ipkey = document.getElementById('inputkey')
+        let ipvalue = document.getElementById('inputvlaue')
+
+        let btn = document.querySelector('#button')
+
+        
+        //  Inserting key valuee inside session Storage 
+        btn.addEventListener('click', () => {
+            let key = ipkey.value
+            let value = ipvalue.value
+            if (key && value) {
+                sessionStorage.setItem(key, value)
+                location.reload()
+            }
+            else {
+                alert('please fill the key and value to insert')
+            }
+        })
+        // clering session storage
+        document.getElementById('clear').addEventListener('click', () => {
+            if (sessionStorage.length) {
+                sessionStorage.clear()
+                location.reload()
+                console.log(sessionStorage)
+            }
+            else {
+                alert('nothing in session storage')
+            }
+        })
+
+
+        //  Checking data insde session storage
+        if (!sessionStorage.length) {
+            document.querySelector('.session-data').textContent = ` No Data Inside `
+        }
+  
+        else {
+            console.log(sessionStorage)
+            let out = document.querySelector('.session-data');
+            for (let i = 0; i < sessionStorage.length; i++) {
+                let key = sessionStorage.key(i)
+                let value = sessionStorage.getItem(key);
+                if(key==="IsThisFirstTime_Log_From_LiveServer")
+                {
+                    continue;
+                }
+                out.innerHTML += `${key}: ${value} <br/>`
+            }
+        }
+    </script>
+</body>
+
+</html>
